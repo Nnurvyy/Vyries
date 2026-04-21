@@ -5,6 +5,7 @@ import '../../helpers/app_colors.dart';
 import 'models/food_model.dart';
 import '../auth/auth_controller.dart';
 import '../history/history_controller.dart';
+import '../watchlist/watchlist_controller.dart';
 import '../shared/widgets/nt_button.dart';
 import 'package:intl/intl.dart';
 
@@ -49,7 +50,8 @@ class _FoodDetailViewState extends State<FoodDetailView> {
       'fat': baseNutrition['fat']! * _quantity,
     };
     
-    final bool isInWatchlist = auth.isInWatchlist(widget.food.id);
+    final watchlist = context.watch<WatchlistController>();
+    final bool isInWatchlist = watchlist.isInWatchlist(widget.food.id);
 
     return Scaffold(
       backgroundColor: isDark ? AppColors.darkBackground : AppColors.lightBackground,
@@ -70,7 +72,7 @@ class _FoodDetailViewState extends State<FoodDetailView> {
                   isInWatchlist ? Icons.bookmark_rounded : Icons.bookmark_border_rounded,
                   color: isInWatchlist ? AppColors.warning : Colors.white,
                 ),
-                onPressed: () => auth.toggleWatchlist(widget.food.id),
+                onPressed: () => context.read<WatchlistController>().toggleWatchlist(widget.food.id),
               ),
             ],
             flexibleSpace: FlexibleSpaceBar(

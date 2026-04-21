@@ -19,7 +19,6 @@ class UserModel extends HiveObject {
   DateTime? birthDate;
   bool isBlocked;
   double? targetWeightGainPerMonth; // kg/bulan (pos = naik, neg = turun)
-  List<String> watchlist;           // food IDs
 
   UserModel({
     required this.id,
@@ -37,8 +36,7 @@ class UserModel extends HiveObject {
     this.birthDate,
     this.isBlocked = false,
     this.targetWeightGainPerMonth,
-    List<String>? watchlist,
-  }) : watchlist = watchlist ?? [];
+  });
 
   /// Target makro harian (gram)
   Map<String, double> get macroTargets {
@@ -77,7 +75,6 @@ class UserModelAdapter extends TypeAdapter<UserModel> {
       birthDate: f[12] as DateTime?,
       isBlocked: f[13] as bool? ?? false,
       targetWeightGainPerMonth: f[14] as double?,
-      watchlist: (f[15] as List?)?.cast<String>() ?? [],
     );
   }
 
@@ -99,7 +96,6 @@ class UserModelAdapter extends TypeAdapter<UserModel> {
       ..writeByte(11)..write(obj.dailyCalorieNeed)
       ..writeByte(12)..write(obj.birthDate)
       ..writeByte(13)..write(obj.isBlocked)
-      ..writeByte(14)..write(obj.targetWeightGainPerMonth)
-      ..writeByte(15)..write(obj.watchlist);
+      ..writeByte(14)..write(obj.targetWeightGainPerMonth);
   }
 }

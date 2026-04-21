@@ -135,22 +135,6 @@ class AuthController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> toggleWatchlist(String foodId) async {
-    if (_currentUser == null) return;
-    final list = List<String>.from(_currentUser!.watchlist);
-    if (list.contains(foodId)) {
-      list.remove(foodId);
-    } else {
-      list.add(foodId);
-    }
-    _currentUser!.watchlist = list;
-    await updateProfile(_currentUser!);
-  }
-
-  bool isInWatchlist(String foodId) {
-    return _currentUser?.watchlist.contains(foodId) ?? false;
-  }
-
   void clearError() {
     _errorMessage = null;
     notifyListeners();

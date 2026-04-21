@@ -6,6 +6,7 @@ import '../food/food_controller.dart';
 import '../food/models/food_model.dart';
 import 'food_detail_view.dart';
 import '../auth/auth_controller.dart';
+import '../watchlist/watchlist_controller.dart';
 
 class FoodListView extends StatefulWidget {
   final String? initialSearch;
@@ -273,16 +274,16 @@ class _FoodListViewState extends State<FoodListView> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Consumer<AuthController>(
-                  builder: (_, auth, __) {
-                    final isSaved = auth.isInWatchlist(food.id);
+                Consumer<WatchlistController>(
+                  builder: (_, watchlist, __) {
+                    final isSaved = watchlist.isInWatchlist(food.id);
                     return IconButton(
                       icon: Icon(
                         isSaved ? Icons.bookmark_rounded : Icons.bookmark_border_rounded,
                         color: isSaved ? AppColors.warning : AppColors.lightTextSecondary.withOpacity(0.5),
                         size: 20,
                       ),
-                      onPressed: () => auth.toggleWatchlist(food.id),
+                      onPressed: () => watchlist.toggleWatchlist(food.id),
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(),
                     );
